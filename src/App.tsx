@@ -47,9 +47,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {process.env.NODE_ENV === 'development' && (
-        <div className="RawResults">{results !== null && JSON.stringify(results, null, 2)}</div>
-      )}
+      <div className="RawResults">{results !== null && JSON.stringify(results, null, 2)}</div>
     </div>
   );
 };
