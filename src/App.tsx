@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent, ChangeEvent } from 'react';
+import React, { useState, KeyboardEvent, ChangeEvent, useRef, useEffect } from 'react';
 import parsePrompt, { PromptMatch } from './utils/parsePrompt';
 
 import './App.scss';
@@ -7,6 +7,13 @@ import moment from 'moment';
 const App: React.FC = () => {
   const [results, setResults] = useState<PromptMatch | null>(null);
   const [text, setText] = useState('');
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, []);
 
   function handleKeypress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
@@ -29,6 +36,7 @@ const App: React.FC = () => {
           onChange={handleChange}
           value={text}
           placeholder="remind me to..."
+          ref={ref}
         />
       </div>
 
