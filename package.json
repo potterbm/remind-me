@@ -6,11 +6,13 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@types/node": "^12.20.19",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
+    "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -19,9 +21,15 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start:server": "concurrently \"tsc --project server/tsconfig.json -w\" \"nodemon server/dist/server/index.js\"",
+    "build:client": "react-scripts build",
+    "build:server": "tsc --project server/tsconfig.json",
+    "build": "npm run build:client && npm run build:server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": ""
   },
   "eslintConfig": {
     "extends": [
@@ -43,11 +51,17 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.3",
+    "@types/node": "^12.20.25",
+    "@types/pg": "^8.6.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "concurrently": "^6.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.4.1",
+    "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.5"
   }

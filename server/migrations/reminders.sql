@@ -1,0 +1,27 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE reminders(
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  input VARCHAR NOT NULL,
+  reminder VARCHAR NOT NULL,
+  method VARCHAR(100) NULL,
+  reminder_time TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE OR REPLACE FUNCTION update_timestamp() RETURNS TRIGGER
+  LANGUAGE plpgsql
+  AS
+  $$
+  BEGIN
+      NEW.updated_at = CURRENT_TIMESTAMP;
+      RETURN NEW;
+  END;
+  $$;
+
+CREATE TRIGGER update_timestamp
+  BEFORE UPDATE
+  ON reminders
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_timestamp();
